@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Song Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .player-container {
+            text-align: center;
+        }
+        .audio-player {
+            margin-top: 20px;
+            display: inline-block;
+        }
+        button:disabled {
+            background-color: grey;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="player-container">
+        <h1>Enjoy Your Private Song</h1>
+        <audio id="audioPlayer" class="audio-player" controls>
+            <source src="your-audio-file.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+        <br>
+        <button id="playButton" onclick="playSong()">Play Song</button>
+    </div>
+
+    <script>
+        let audioPlayer = document.getElementById("audioPlayer");
+        let playButton = document.getElementById("playButton");
+
+        function playSong() {
+            audioPlayer.play();
+            playButton.disabled = true; // Disable play button after one click
+            audioPlayer.onended = function() {
+                alert("Thank you for listening! You cannot play the song again.");
+                audioPlayer.pause(); // Pause the song after it ends
+            };
+        }
+
+        audioPlayer.oncanplay = function() {
+            // Prevent download and share options
+            const controls = audioPlayer.getElementsByTagName('button');
+            for (let button of controls) {
+                button.disabled = true; // Disable all buttons
+            }
+        };
+    </script>
+</body>
+</html>
